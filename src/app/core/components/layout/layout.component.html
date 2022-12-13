@@ -1,0 +1,9 @@
+<ng-content select="[header]"></ng-content>
+<mat-sidenav-container [autosize]="true">
+  <mat-sidenav mode="side" [disableClose]="true" [opened]="true">
+    <ng-content select="[drawer]"></ng-content>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content select="[main]"></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
