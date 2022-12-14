@@ -37,6 +37,12 @@ export class StudentsPageComponent implements OnInit {
     this.openStudentDataModal(student);
   }
 
+  deleteStudent(student: IStudent) {
+    this.studentsApiService.deleteStudent(student.id).subscribe({
+      next: () => this.loadStudents()
+    });
+  }
+
   private openStudentDataModal(data?: IStudent) {
     const dialogRef = this.dialog.open(StudentDataFormModalComponent, { data });
 

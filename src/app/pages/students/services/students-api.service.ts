@@ -14,11 +14,15 @@ export class StudentsApiService {
     return this.http.get<IStudent[]>('/api/students');
   }
 
-  public postAddStudent(studentData: Omit<IStudent, 'id'>): Observable<unknown> {
-    return this.http.post<unknown>('/api/students', studentData);
+  public postAddStudent(studentData: Omit<IStudent, 'id'>): Observable<IStudent> {
+    return this.http.post<IStudent>('/api/students', studentData);
   }
 
-  public putEditStudent(id: string, studentData: Omit<IStudent, 'id'>): Observable<unknown> {
-    return this.http.put<unknown>(`/api/students/${id}`, studentData);
+  public putEditStudent(id: string, studentData: Omit<IStudent, 'id'>): Observable<IStudent> {
+    return this.http.put<IStudent>(`/api/students/${id}`, studentData);
+  }
+
+  public deleteStudent(id: string): Observable<unknown> {
+    return this.http.delete<unknown>(`/api/students/${id}`, {});
   }
 }
