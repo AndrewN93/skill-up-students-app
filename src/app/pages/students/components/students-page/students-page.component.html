@@ -1,1 +1,35 @@
-<p>students-page works!</p>
+<div class="table-heading">
+  <h1>Students List</h1>
+  <button mat-raised-button color="primary">Add</button>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="startDate">
+    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.startDate | date}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="overageMark">
+    <th mat-header-cell *matHeaderCellDef> Overage Mark </th>
+    <td mat-cell *matCellDef="let element"> {{element.overageMark}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isInTop">
+    <th mat-header-cell *matHeaderCellDef> Top </th>
+    <td mat-cell *matCellDef="let element"> {{element.isInTop ? 'yes' : 'no'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isActive">
+    <th mat-header-cell *matHeaderCellDef> Active </th>
+    <td mat-cell *matCellDef="let element"> {{element.isActive ? 'yes' : 'no'}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
