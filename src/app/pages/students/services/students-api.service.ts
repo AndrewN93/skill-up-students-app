@@ -18,7 +18,7 @@ export class StudentsApiService {
     return this.http.post<unknown>('/api/students', studentData);
   }
 
-  public putEditStudent(id: number, studentData: IStudent): Observable<unknown> {
-    return this.http.put<unknown>('/api/students', studentData);
+  public putEditStudent(id: string, studentData: Omit<IStudent, 'id'>): Observable<unknown> {
+    return this.http.put<unknown>(`/api/students/${id}`, studentData);
   }
 }

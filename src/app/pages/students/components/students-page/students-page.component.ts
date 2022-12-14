@@ -15,6 +15,7 @@ export class StudentsPageComponent implements OnInit {
     'overageMark',
     'isInTop',
     'isActive',
+    'actions',
   ];
   dataSource: IStudent[] = [];
   isLoading = false;
@@ -23,9 +24,21 @@ export class StudentsPageComponent implements OnInit {
     private studentsApiService: StudentsApiService, 
     public dialog: MatDialog,
   ) { }
+
+  ngOnInit() {
+    this.loadStudents();
+  }
   
   addStudent() {
-    const dialogRef = this.dialog.open(StudentDataFormModalComponent);
+    this.openStudentDataModal();
+  }
+
+  editStudent(student: IStudent) {
+    this.openStudentDataModal(student);
+  }
+
+  private openStudentDataModal(data?: IStudent) {
+    const dialogRef = this.dialog.open(StudentDataFormModalComponent, { data });
 
     dialogRef.afterClosed().subscribe({
       next: (wasUpdate) => {
@@ -34,11 +47,8 @@ export class StudentsPageComponent implements OnInit {
       },
     })
   }
-  ngOnInit() {
-    this.loadStudents();
-  }
 
-  loadStudents() {
+  private loadStudents() {
     this.isLoading = false;
     this.studentsApiService.getStudents().subscribe({
       next: (result) => {

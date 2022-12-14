@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { StudentsApiService } from '../../services/students-api.service';
+import { IStudent } from '../student.types';
 
 interface IStudentForm {
   name: FormControl<string>;
@@ -16,10 +17,17 @@ interface IStudentForm {
   templateUrl: './student-data-form-modal.component.html',
   styleUrls: ['./student-data-form-modal.component.scss'],
 })
-export class StudentDataFormModalComponent {
+export class StudentDataFormModalComponent implements OnInit {
+  public isEditing = false;
   public studentDataFrom = this.fb.group<IStudentForm>({
-    name: new FormControl('', { nonNullable: true }),
-    startDate: new FormControl('', { nonNullable: true }),
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
+    startDate: new FormControl('', {
+      nonNullable: true,
+      validators: Validators.required,
+    }),
     overageMark: new FormControl(5, { nonNullable: true }),
     isInTop: new FormControl(false, { nonNullable: true }),
     isActive: new FormControl(true, { nonNullable: true }),
@@ -27,17 +35,29 @@ export class StudentDataFormModalComponent {
   constructor(
     public fb: FormBuilder,
     public studentsApiService: StudentsApiService,
+    @Inject(MAT_DIALOG_DATA) public data: IStudent,
     public dialogRef: MatDialogRef<StudentDataFormModalComponent>
   ) {}
 
-  save() {
-    if (this.studentDataFrom.valid) {
-      this.studentsApiService
-        .postAddStudent(this.studentDataFrom.getRawValue())
-        .subscribe({
-          next: () => this.dialogRef.close,
-        });
+  ngOnInit() {
+    if (this.data) {
+      this.isEditing = true;
+      this.studentDataFrom.patchValue(this.data);
     }
+  }
+
+  save() {
+    if (!this.studentDataFrom.valid) {
+      return;
+    }
+    const formData = this.studentDataFrom.getRawValue();
+    const observable = this.isEditing
+      ? this.studentsApiService.putEditStudent(this.data?.id, formData)
+      : this.studentsApiService.postAddStudent(formData);
+
+    observable.subscribe({
+      next: (res) => this.dialogRef.close(res),
+    });
   }
 
   closeDialog() {
