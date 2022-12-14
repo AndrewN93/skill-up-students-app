@@ -1,0 +1,1 @@
+export * from './students-page/students-page.component';
