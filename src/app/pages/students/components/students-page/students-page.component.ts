@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { StudentsApiService } from '../../services/students-api.service';
+import { StudentDataFormModalComponent } from '../student-data-form-modal/student-data-form-modal.component';
 import { IStudent } from '../student.types';
 @Component({
   selector: 'app-students-page',
@@ -17,8 +19,21 @@ export class StudentsPageComponent implements OnInit {
   dataSource: IStudent[] = [];
   isLoading = false;
 
-  constructor(private studentsApiService: StudentsApiService) {}
+  constructor(
+    private studentsApiService: StudentsApiService, 
+    public dialog: MatDialog,
+  ) { }
+  
+  addStudent() {
+    const dialogRef = this.dialog.open(StudentDataFormModalComponent);
 
+    dialogRef.afterClosed().subscribe({
+      next: (wasUpdate) => {
+        console.log(wasUpdate);
+        if (wasUpdate) this.loadStudents();
+      },
+    })
+  }
   ngOnInit() {
     this.loadStudents();
   }
