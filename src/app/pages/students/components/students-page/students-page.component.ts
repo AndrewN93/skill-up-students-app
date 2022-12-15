@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
 import { studentListActions } from '../../store/students.actions';
+import { selectStudents } from '../../store/students.reducers';
 import { StudentDataFormModalComponent } from '../student-data-form-modal/student-data-form-modal.component';
 import { IStudent } from '../student.types';
 @Component({
@@ -10,7 +12,8 @@ import { IStudent } from '../student.types';
   templateUrl: './students-page.component.html',
   styleUrls: ['./students-page.component.scss'],
 })
-export class StudentsPageComponent implements OnInit {
+export class StudentsPageComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   displayedColumns: string[] = [
     'name',
     'startDate',
@@ -30,7 +33,14 @@ export class StudentsPageComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(studentListActions.loadStudents());
-    this.loadStudents();
+    this.store.select<IStudent[]>(selectStudents)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(students => this.dataSource = students);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   
   addStudent() {

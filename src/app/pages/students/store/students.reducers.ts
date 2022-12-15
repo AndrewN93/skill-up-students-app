@@ -5,14 +5,14 @@ import { studentListActions } from './students.actions';
 export const studentListFeatureKey = 'students-list';
 
 export interface StudentsListState {
-  entities: IStudent[];
+  students: IStudent[];
   isLoading: boolean;
   loaded: boolean;
   error: string;
 }
 
 export const studentListInitialState: StudentsListState = {
-  entities: [],
+  students: [],
   isLoading: false,
   loaded: false,
   error: '',
@@ -30,20 +30,24 @@ export const studentListFeature = createFeature({
       studentListActions.loadStudentsSuccess,
       (state, action): StudentsListState => ({
         ...state,
-        entities: action.students,
+        students: action.students,
         isLoading: false,
         loaded: true,
+        error: '',
       })
     ),
     on(
       studentListActions.loadStudentsFailure,
-      (state, {error}): StudentsListState => ({
+      (state, { error }): StudentsListState => ({
         ...state,
-        entities: [],
+        students: [],
         isLoading: false,
         loaded: true,
-        error
+        error,
       })
     )
   ),
 });
+
+export const { selectIsLoading, selectStudents, selectLoaded, selectError } =
+  studentListFeature;
