@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 import { StudentsApiService } from '../../services/students-api.service';
+import { studentListActions } from '../../store/students.actions';
 import { StudentDataFormModalComponent } from '../student-data-form-modal/student-data-form-modal.component';
 import { IStudent } from '../student.types';
 @Component({
@@ -21,11 +23,13 @@ export class StudentsPageComponent implements OnInit {
   isLoading = false;
 
   constructor(
+    private readonly store: Store,
     private studentsApiService: StudentsApiService, 
     public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
+    this.store.dispatch(studentListActions.loadStudents());
     this.loadStudents();
   }
   

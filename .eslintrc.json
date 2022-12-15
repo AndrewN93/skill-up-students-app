@@ -31,8 +31,17 @@
             "style": "kebab-case"
           }
         ],
-        "quotes": [2, "single", { "avoidEscape": true }],
-        "indent": ["warn", 2]
+        "quotes": [
+          2,
+          "single",
+          {
+            "avoidEscape": true
+          }
+        ],
+        "indent": [
+          "warn",
+          2
+        ]
       }
     },
     {
@@ -43,6 +52,14 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {}
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended-requiring-type-checking"
+      ]
     }
   ]
 }
