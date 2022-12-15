@@ -14,6 +14,10 @@ export class StudentsApiService {
     return this.http.get<IStudent[]>('/api/students');
   }
 
+  public getSingleStudent(id: string): Observable<IStudent> {
+    return this.http.get<IStudent>(`/api/students/${id}`);
+  }
+
   public postAddStudent(studentData: Omit<IStudent, 'id'>): Observable<IStudent> {
     return this.http.post<IStudent>('/api/students', studentData);
   }

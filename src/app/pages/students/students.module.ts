@@ -8,9 +8,10 @@ import { StudentsRoutingModule } from './students-routing.module';
 import { MaterialModule } from 'src/app/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { studentListFeature } from './store/students.reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { StudentsEffects } from './store/students.effects';
+import { StudentsListEffects } from './store/effects/students-list.effects';
+import { StudentEffects } from './store/effects/student.effects';
+import * as fromStudents from './store/reducers';
 
 @NgModule({
   declarations: [StudentsPageComponent, StudentDataFormModalComponent],
@@ -20,8 +21,8 @@ import { StudentsEffects } from './store/students.effects';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    EffectsModule.forFeature([StudentsEffects]),
-    StoreModule.forFeature(studentListFeature.name, studentListFeature.reducer),
+    EffectsModule.forFeature(StudentsListEffects, StudentEffects),
+    StoreModule.forFeature(fromStudents.featureKey, fromStudents.reducers),
   ],
 })
 export class StudentsModule {}

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
-import { studentListActions } from '../../store/students.actions';
-import { selectStudents } from '../../store/students.reducers';
+import { studentListActions } from '../../store/actions/students-list.actions';
+import { selectStudentsList } from '../../store/reducers';
 import { StudentDataFormModalComponent } from '../student-data-form-modal/student-data-form-modal.component';
 import { IStudent } from '../student.types';
 @Component({
@@ -33,8 +33,9 @@ export class StudentsPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store.dispatch(studentListActions.loadStudents());
-    this.store.select<IStudent[]>(selectStudents)
-      .pipe(takeUntil(this.destroy$))
+    this.store.select(selectStudentsList)
+      .pipe(
+        takeUntil(this.destroy$))
       .subscribe(students => this.dataSource = students);
   }
 

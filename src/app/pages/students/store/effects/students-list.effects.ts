@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs';
-import { StudentsApiService } from '../services/students-api.service';
-import { studentListActions } from './students.actions';
+import { StudentsApiService } from '../../services/students-api.service';
+import { studentListActions } from '../actions/students-list.actions';
 
 @Injectable()
-export class StudentsEffects {
+export class StudentsListEffects {
   loadMovies$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(studentListActions.loadStudents),

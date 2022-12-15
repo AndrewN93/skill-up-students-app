@@ -1,6 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { IStudent } from '../components/student.types';
-import { studentListActions } from './students.actions';
+import { IStudent } from '../../components/student.types';
+import { studentListActions } from '../actions/students-list.actions';
 
 export const studentListFeatureKey = 'students-list';
 
@@ -49,5 +49,3 @@ export const studentListFeature = createFeature({
   ),
 });
 
-export const { selectIsLoading, selectStudents, selectLoaded, selectError } =
-  studentListFeature;
