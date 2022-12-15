@@ -1,4 +1,4 @@
-import { createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { IStudent } from '../../components/student.types';
 
 export const studentActions = createActionGroup({
@@ -8,11 +8,11 @@ export const studentActions = createActionGroup({
     'Load Student Success': props<{ student: IStudent }>(),
 
     'Save Student': props<{ studentData: Omit<IStudent, 'id'>, id?: string }>(),
-    'Save Student Success': props<{ student: IStudent }>(),
+    'Save Student Success': emptyProps(),
     'Save Student Failure': props<{ error: string }>(),
   
     'Delete Student': props<{ id: string }>(),
-    'Delete Student Success': props<{ id: string }>(),
+    'Delete Student Success': emptyProps(),
     'Delete Student Failure': props<{ error: string }>(),
   },
 });

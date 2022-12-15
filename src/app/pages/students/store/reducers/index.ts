@@ -26,20 +26,20 @@ export const selectStudentsState =
 
 export const selectStudentsListState = createSelector(
   selectStudentsState,
-  (state) => {
-    console.log(state[studentListFeature.name], studentListFeature.name);
-    return state[studentListFeature.name];
-  }
+  (state) => state[studentListFeature.name]
 );
 
 export const selectStudentState = createSelector(
   selectStudentsState,
-  (state) => {
-    return state[studentFeature.name];
-  }
+  (state) => state[studentFeature.name]
 );
 
 export const selectStudentsList = createSelector(
   selectStudentsListState,
   ({ students }) => students
+);
+
+export const selectStudent = createSelector(
+  selectStudentState,
+  ({ data }) => data
 );

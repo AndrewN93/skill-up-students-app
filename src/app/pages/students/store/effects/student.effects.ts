@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
-import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
 import { studentActions } from '../actions/student.actions';
 
@@ -23,7 +23,7 @@ export class StudentEffects {
         }
         return this.studentsApiService.postAddStudent(studentData);
       }),
-      map((student) => studentActions.saveStudentSuccess({ student })),
+      map(() => studentActions.saveStudentSuccess()),
       catchError(() =>
         of(
           studentActions.saveStudentFailure({
@@ -37,13 +37,8 @@ export class StudentEffects {
   deleteStudent$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(studentActions.deleteStudent),
-      switchMap(({ id }) =>
-        forkJoin({
-          request: this.studentsApiService.deleteStudent(id),
-          id: of(id),
-        })
-      ),
-      map(({ id }) => studentActions.deleteStudentSuccess({ id })),
+      switchMap(({ id }) => this.studentsApiService.deleteStudent(id)),
+      map(() => studentActions.deleteStudentSuccess()),
       catchError(() =>
         of(
           studentActions.deleteStudentFailure({

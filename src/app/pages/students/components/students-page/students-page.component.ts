@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil, tap } from 'rxjs';
-import { StudentsApiService } from '../../services/students-api.service';
+import { studentActions } from '../../store/actions/student.actions';
 import { studentListActions } from '../../store/actions/students-list.actions';
 import { selectStudentsList } from '../../store/reducers';
 import { StudentDataFormModalComponent } from '../student-data-form-modal/student-data-form-modal.component';
@@ -14,6 +14,8 @@ import { IStudent } from '../student.types';
 })
 export class StudentsPageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  private dialogRef: MatDialogRef<StudentDataFormModalComponent> | null = null;
+  
   displayedColumns: string[] = [
     'name',
     'startDate',
@@ -27,15 +29,17 @@ export class StudentsPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly store: Store,
-    private studentsApiService: StudentsApiService, 
     public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.store.dispatch(studentListActions.loadStudents());
+      
     this.store.select(selectStudentsList)
       .pipe(
-        takeUntil(this.destroy$))
+        tap(() => this.dialogRef && this.dialogRef.close()),
+        takeUntil(this.destroy$)
+      )
       .subscribe(students => this.dataSource = students);
   }
 
@@ -48,35 +52,15 @@ export class StudentsPageComponent implements OnInit, OnDestroy {
     this.openStudentDataModal();
   }
 
-  editStudent(student: IStudent) {
-    this.openStudentDataModal(student);
+  editStudent(id: string) {
+    this.openStudentDataModal(id);
   }
 
-  deleteStudent(student: IStudent) {
-    this.studentsApiService.deleteStudent(student.id).subscribe({
-      next: () => this.loadStudents()
-    });
+  deleteStudent(id: string) {
+    this.store.dispatch(studentActions.deleteStudent({id}))
   }
 
-  private openStudentDataModal(data?: IStudent) {
-    const dialogRef = this.dialog.open(StudentDataFormModalComponent, { data });
-
-    dialogRef.afterClosed().subscribe({
-      next: (wasUpdate) => {
-        console.log(wasUpdate);
-        if (wasUpdate) this.loadStudents();
-      },
-    })
-  }
-
-  private loadStudents() {
-    this.isLoading = false;
-    this.studentsApiService.getStudents().subscribe({
-      next: (result) => {
-        this.dataSource = result;
-        this.isLoading = true;
-      },
-      error: () => (this.isLoading = false),
-    });
+  private openStudentDataModal(id?: string) {
+    this.dialogRef = this.dialog.open(StudentDataFormModalComponent, { data: {id} });
   }
 }

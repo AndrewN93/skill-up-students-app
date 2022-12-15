@@ -43,7 +43,7 @@ export const studentFeature = createFeature({
     ),
     on(
       studentActions.saveStudentSuccess,
-      (state): StudentState => ({ ...state, isSaving: false })
+      (state): StudentState => ({ ...state, data: studentInitialState.data, isSaving: false })
     ),
     on(
       studentActions.saveStudentFailure,
