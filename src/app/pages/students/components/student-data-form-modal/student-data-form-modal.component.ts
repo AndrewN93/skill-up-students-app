@@ -5,13 +5,13 @@ import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
 import { studentActions } from '../../store/actions/student.actions';
-import { selectStudent } from '../../store/reducers';
+import { selectStudent, selectStudentLoading, selectStudentSaving } from '../../store/reducers';
 import { IStudent } from '../student.types';
 
 interface IStudentForm {
   name: FormControl<string>;
   startDate: FormControl<string>;
-  overageMark: FormControl<number>;
+  ovarageScore: FormControl<number>;
   isInTop: FormControl<boolean>;
   isActive: FormControl<boolean>;
 }
@@ -23,6 +23,8 @@ interface IStudentForm {
 })
 export class StudentDataFormModalComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  public isLoading$ = this.store.select(selectStudentLoading);
+  public isSaving$ = this.store.select(selectStudentSaving);
   public isEditing = false;
   public studentDataFrom = this.fb.group<IStudentForm>({
     name: new FormControl('', {
@@ -33,7 +35,7 @@ export class StudentDataFormModalComponent implements OnInit, OnDestroy {
       nonNullable: true,
       validators: Validators.required,
     }),
-    overageMark: new FormControl(5, { nonNullable: true }),
+    ovarageScore: new FormControl(5, { nonNullable: true }),
     isInTop: new FormControl(false, { nonNullable: true }),
     isActive: new FormControl(true, { nonNullable: true }),
   });

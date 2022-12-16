@@ -10,7 +10,6 @@ import {
 } from './students-list.reducer';
 
 export const featureKey = 'studentsModule';
-
 export interface StudentsRootState {
   studentsList: StudentsListState;
   student: StudentState;
@@ -42,4 +41,14 @@ export const selectStudentsList = createSelector(
 export const selectStudent = createSelector(
   selectStudentState,
   ({ data }) => data
+);
+
+export const selectStudentLoading = createSelector(
+  selectStudentState,
+  ({ isLoading }) => isLoading
+);
+
+export const selectStudentSaving = createSelector(
+  selectStudentState,
+  ({ isSaving }) => isSaving
 );

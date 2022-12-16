@@ -2,7 +2,7 @@ export interface IStudent {
   id: string;
   name: string;
   startDate: string;
-  overageMark: number;
+  ovarageScore: number;
   isInTop: boolean;
   isActive: boolean;
 }

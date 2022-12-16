@@ -16,7 +16,7 @@ export const studentInitialState: StudentState = {
     id: '',
     name: '',
     startDate: '',
-    overageMark: 0,
+    ovarageScore: 0,
     isInTop: false,
     isActive: false
   },

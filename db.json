@@ -3,34 +3,10 @@
     {
       "name": "Test12",
       "startDate": "2022-12-22T22:00:00.000Z",
-      "overageMark": 8909,
+      "ovarageScore": 123,
       "isInTop": true,
       "isActive": true,
       "id": 3
-    },
-    {
-      "name": "Test",
-      "startDate": "2022-12-21T22:00:00.000Z",
-      "overageMark": 0,
-      "isInTop": true,
-      "isActive": true,
-      "id": 4
-    },
-    {
-      "name": "kdsakj",
-      "startDate": "2022-12-14T22:00:00.000Z",
-      "overageMark": 0,
-      "isInTop": true,
-      "isActive": true,
-      "id": 5
-    },
-    {
-      "name": "53254",
-      "startDate": "2022-12-22T22:00:00.000Z",
-      "overageMark": 2,
-      "isInTop": true,
-      "isActive": true,
-      "id": 6
     }
   ]
 }

@@ -19,7 +19,7 @@ export class StudentsPageComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'name',
     'startDate',
-    'overageMark',
+    'ovarageScore',
     'isInTop',
     'isActive',
     'actions',
