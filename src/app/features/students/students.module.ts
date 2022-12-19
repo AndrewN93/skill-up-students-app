@@ -5,7 +5,7 @@ import {
   StudentDataFormModalComponent,
 } from './components';
 import { StudentsRoutingModule } from './students-routing.module';
-import { MaterialModule } from 'src/app/material';
+import { MaterialModule } from 'src/app/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';

@@ -6,9 +6,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
 import { studentActions } from '../../store/actions/student.actions';
 import { selectStudent, selectStudentLoading, selectStudentSaving } from '../../store/selectors/student.selectors';
-import { IStudent } from '../student.types';
+import { Student } from '../student.types';
 
-interface IStudentForm {
+interface StudentForm {
   name: FormControl<string>;
   startDate: FormControl<string>;
   ovarageScore: FormControl<number>;
@@ -26,7 +26,7 @@ export class StudentDataFormModalComponent implements OnInit, OnDestroy {
   public isLoading$ = this.store.select(selectStudentLoading);
   public isSaving$ = this.store.select(selectStudentSaving);
   public isEditing = false;
-  public studentDataFrom = this.fb.group<IStudentForm>({
+  public studentDataFrom = this.fb.group<StudentForm>({
     name: new FormControl('', {
       nonNullable: true,
       validators: Validators.required,
@@ -42,7 +42,7 @@ export class StudentDataFormModalComponent implements OnInit, OnDestroy {
   constructor(
     public fb: FormBuilder,
     public studentsApiService: StudentsApiService,
-    @Inject(MAT_DIALOG_DATA) public data: Pick<IStudent, 'id'>,
+    @Inject(MAT_DIALOG_DATA) public data: Pick<Student, 'id'>,
     public dialogRef: MatDialogRef<StudentDataFormModalComponent>,
     private store: Store,
   ) {}

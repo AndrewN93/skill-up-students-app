@@ -1,13 +1,13 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { IStudent } from '../../components/student.types';
+import { Student } from '../../components/student.types';
 
 export const studentActions = createActionGroup({
   source: 'Student',
   events: {
     'Load Student': props<{ id: string }>(),
-    'Load Student Success': props<{ student: IStudent }>(),
+    'Load Student Success': props<{ student: Student }>(),
 
-    'Save Student': props<{ studentData: Omit<IStudent, 'id'>, id?: string }>(),
+    'Save Student': props<{ studentData: Omit<Student, 'id'>, id?: string }>(),
     'Save Student Success': emptyProps(),
     'Save Student Failure': props<{ error: string }>(),
   

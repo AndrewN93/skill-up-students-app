@@ -6,7 +6,7 @@ import { studentActions } from '../../store/actions/student.actions';
 import { studentListActions } from '../../store/actions/students-list.actions';
 import { selectStudentsList } from '../../store/selectors/students-list.selectors';
 import { StudentDataFormModalComponent } from '../student-data-form-modal/student-data-form-modal.component';
-import { IStudent } from '../student.types';
+import { Student } from '../student.types';
 @Component({
   selector: 'app-students-page',
   templateUrl: './students-page.component.html',
@@ -24,7 +24,7 @@ export class StudentsPageComponent implements OnInit, OnDestroy {
     'isActive',
     'actions',
   ];
-  dataSource: IStudent[] = [];
+  dataSource: Student[] = [];
   isLoading = false;
 
   constructor(private readonly store: Store, public dialog: MatDialog) {}
