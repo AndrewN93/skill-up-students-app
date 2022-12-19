@@ -2,8 +2,6 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { IStudent } from '../../components/student.types';
 import { studentListActions } from '../actions/students-list.actions';
 
-export const studentListFeatureKey = 'students-list';
-
 export interface StudentsListState {
   students: IStudent[];
   isLoading: boolean;
@@ -30,7 +28,7 @@ export const studentListFeature = createFeature({
       studentListActions.loadStudentsSuccess,
       (state, action): StudentsListState => ({
         ...state,
-        students: action.students,
+        students: [...action.students],
         isLoading: false,
         loaded: true,
         error: '',
@@ -48,4 +46,3 @@ export const studentListFeature = createFeature({
     )
   ),
 });
-

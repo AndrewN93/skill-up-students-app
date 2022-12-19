@@ -35,7 +35,7 @@ export const studentFeature = createFeature({
     ),
     on(
       studentActions.loadStudentSuccess,
-      (state, { student }): StudentState => ({ ...state, data: student, isLoading: false })
+      (state, { student }): StudentState => ({ ...state, data: {...student}, isLoading: false })
     ),
     on(
       studentActions.saveStudent,
@@ -43,7 +43,7 @@ export const studentFeature = createFeature({
     ),
     on(
       studentActions.saveStudentSuccess,
-      (state): StudentState => ({ ...state, data: studentInitialState.data, isSaving: false })
+      (state): StudentState => ({ ...state, data: {...studentInitialState.data}, isSaving: false })
     ),
     on(
       studentActions.saveStudentFailure,

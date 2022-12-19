@@ -1,7 +1,7 @@
 import { StudentsRootState } from '..';
 import { selectStudent, selectStudentLoading, selectStudentSaving } from './student.selectors';
 
-fdescribe('Selectors', () => {
+describe('Selectors', () => {
   const initialState: Pick<StudentsRootState, 'student'> = {
     student: {
       data: {
