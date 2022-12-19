@@ -1,52 +1,20 @@
 {
   "students": [
     {
-      "name": "Arividerci",
-      "startDate": "2022-11-30T22:00:00.000Z",
-      "ovarageScore": 321,
-      "isInTop": false,
-      "isActive": false,
-      "id": 4
-    },
-    {
-      "name": "123",
-      "startDate": "2022-12-20T22:00:00.000Z",
-      "ovarageScore": 123123,
-      "isInTop": true,
-      "isActive": true,
-      "id": 5
-    },
-    {
-      "name": "123123",
-      "startDate": "+123123-01-16T22:00:00.000Z",
-      "ovarageScore": 123123,
-      "isInTop": true,
-      "isActive": true,
-      "id": 6
-    },
-    {
-      "name": "Test123",
-      "startDate": "2022-12-13T22:00:00.000Z",
-      "ovarageScore": 2,
-      "isInTop": false,
-      "isActive": false,
-      "id": 7
-    },
-    {
-      "name": "Test student - 0123",
-      "startDate": "2022-12-19T22:00:00.000Z",
-      "ovarageScore": 123,
-      "isInTop": true,
-      "isActive": true,
-      "id": 8
-    },
-    {
-      "name": "Andrii",
+      "name": "andrii",
       "startDate": "2022-12-18T22:00:00.000Z",
+      "ovarageScore": 4,
+      "isInTop": false,
+      "isActive": false,
+      "id": 1
+    },
+    {
+      "name": "jdfasf",
+      "startDate": "0122-12-31T21:57:56.000Z",
       "ovarageScore": 123,
       "isInTop": true,
       "isActive": true,
-      "id": 9
+      "id": 2
     }
   ]
 }

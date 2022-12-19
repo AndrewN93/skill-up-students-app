@@ -7,7 +7,7 @@ import {
   LayoutComponent,
   PageNotFoundComponent
 } from './components';
-import { MaterialModule } from '../material';
+import { MaterialModule } from '../shared';
 import { RouterModule } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation.component';
 @NgModule({

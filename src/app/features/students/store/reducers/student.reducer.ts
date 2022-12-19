@@ -1,11 +1,11 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { IStudent } from '../../components/student.types';
+import { Student } from '../../components/student.types';
 import { studentActions } from '../actions/student.actions';
 
 export const studentFeatureKey = 'student';
 
 export interface StudentState {
-  data: IStudent;
+  data: Student;
   isSaving: boolean;
   isLoading: boolean;
   savingError: string;

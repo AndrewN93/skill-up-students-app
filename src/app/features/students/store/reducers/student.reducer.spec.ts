@@ -1,4 +1,4 @@
-import { IStudent } from '../../components/student.types';
+import { Student } from '../../components/student.types';
 import { studentActions } from '../actions/student.actions';
 import { studentFeature, studentInitialState } from './student.reducer';
 
@@ -20,7 +20,7 @@ describe('student reducer', () => {
   });
 
   it('should handle loadStudentSuccess action and return brand new object', () => {
-    const newStudentState: IStudent = {
+    const newStudentState: Student = {
       id: '123',
       name: 'Test123',
       startDate: 'startDate',

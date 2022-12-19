@@ -1,9 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { IStudent } from '../../components/student.types';
+import { Student } from '../../components/student.types';
 import { studentListActions } from '../actions/students-list.actions';
 
 export interface StudentsListState {
-  students: IStudent[];
+  students: Student[];
   isLoading: boolean;
   loaded: boolean;
   error: string;
