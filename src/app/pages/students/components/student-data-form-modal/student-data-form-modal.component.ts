@@ -1,13 +1,21 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
+import { studentActions } from '../../store/actions/student.actions';
+import {
+  selectStudent,
+  selectStudentLoading,
+  selectStudentSaving,
+} from '../../store/selectors/student.selectors';
 import { IStudent } from '../student.types';
 
 interface IStudentForm {
   name: FormControl<string>;
   startDate: FormControl<string>;
-  overageMark: FormControl<number>;
+  ovarageScore: FormControl<number>;
   isInTop: FormControl<boolean>;
   isActive: FormControl<boolean>;
 }
@@ -17,7 +25,10 @@ interface IStudentForm {
   templateUrl: './student-data-form-modal.component.html',
   styleUrls: ['./student-data-form-modal.component.scss'],
 })
-export class StudentDataFormModalComponent implements OnInit {
+export class StudentDataFormModalComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  public isLoading$ = this.store.select(selectStudentLoading);
+  public isSaving$ = this.store.select(selectStudentSaving);
   public isEditing = false;
   public studentDataFrom = this.fb.group<IStudentForm>({
     name: new FormControl('', {
@@ -28,36 +39,45 @@ export class StudentDataFormModalComponent implements OnInit {
       nonNullable: true,
       validators: Validators.required,
     }),
-    overageMark: new FormControl(5, { nonNullable: true }),
+    ovarageScore: new FormControl(5, { nonNullable: true }),
     isInTop: new FormControl(false, { nonNullable: true }),
     isActive: new FormControl(true, { nonNullable: true }),
   });
   constructor(
     public fb: FormBuilder,
     public studentsApiService: StudentsApiService,
-    @Inject(MAT_DIALOG_DATA) public data: IStudent,
-    public dialogRef: MatDialogRef<StudentDataFormModalComponent>
+    @Inject(MAT_DIALOG_DATA) public data: Pick<IStudent, 'id'>,
+    public dialogRef: MatDialogRef<StudentDataFormModalComponent>,
+    private store: Store
   ) {}
 
   ngOnInit() {
-    if (this.data) {
+    if (this.data.id) {
       this.isEditing = true;
-      this.studentDataFrom.patchValue(this.data);
+      this.store.dispatch(studentActions.loadStudent({ id: this.data.id }));
     }
+    this.store
+      .select(selectStudent)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (student) => this.studentDataFrom.patchValue(student),
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   save() {
-    if (!this.studentDataFrom.valid) {
-      return;
+    if (this.studentDataFrom.valid) {
+      this.store.dispatch(
+        studentActions.saveStudent({
+          studentData: this.studentDataFrom.getRawValue(),
+          id: this.data?.id,
+        })
+      );
     }
-    const formData = this.studentDataFrom.getRawValue();
-    const observable = this.isEditing
-      ? this.studentsApiService.putEditStudent(this.data?.id, formData)
-      : this.studentsApiService.postAddStudent(formData);
-
-    observable.subscribe({
-      next: (res) => this.dialogRef.close(res),
-    });
   }
 
   closeDialog() {

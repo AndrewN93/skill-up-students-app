@@ -1,7 +1,14 @@
-.form {
+.student-form__wrapper {
   width: 350px;
+  text-align: center;
+  mat-spinner {
+    margin: 0 auto;
+  }
+}
+.student-form {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
 .toggle-controls {
   padding: 20px 0;
