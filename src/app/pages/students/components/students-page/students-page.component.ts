@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { studentActions } from '../../store/actions/student.actions';
 import { studentListActions } from '../../store/actions/students-list.actions';
-import { selectStudentsList } from '../../store/reducers';
+import { selectStudentsList } from '../../store/selectors/students-list.selectors';
 import { StudentDataFormModalComponent } from '../student-data-form-modal/student-data-form-modal.component';
 import { IStudent } from '../student.types';
 @Component({
@@ -15,7 +15,7 @@ import { IStudent } from '../student.types';
 export class StudentsPageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private dialogRef: MatDialogRef<StudentDataFormModalComponent> | null = null;
-  
+
   displayedColumns: string[] = [
     'name',
     'startDate',
@@ -27,27 +27,25 @@ export class StudentsPageComponent implements OnInit, OnDestroy {
   dataSource: IStudent[] = [];
   isLoading = false;
 
-  constructor(
-    private readonly store: Store,
-    public dialog: MatDialog,
-  ) { }
+  constructor(private readonly store: Store, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.store.dispatch(studentListActions.loadStudents());
-      
-    this.store.select(selectStudentsList)
+
+    this.store
+      .select(selectStudentsList)
       .pipe(
         tap(() => this.dialogRef && this.dialogRef.close()),
         takeUntil(this.destroy$)
       )
-      .subscribe(students => this.dataSource = students);
+      .subscribe((students) => (this.dataSource = students));
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  
+
   addStudent() {
     this.openStudentDataModal();
   }
@@ -57,10 +55,12 @@ export class StudentsPageComponent implements OnInit, OnDestroy {
   }
 
   deleteStudent(id: string) {
-    this.store.dispatch(studentActions.deleteStudent({id}))
+    this.store.dispatch(studentActions.deleteStudent({ id }));
   }
 
   private openStudentDataModal(id?: string) {
-    this.dialogRef = this.dialog.open(StudentDataFormModalComponent, { data: {id} });
+    this.dialogRef = this.dialog.open(StudentDataFormModalComponent, {
+      data: { id },
+    });
   }
 }

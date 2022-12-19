@@ -5,7 +5,7 @@ import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
 import { StudentEffects } from './student.effects';
-import { StudentsRootState } from '../reducers';
+import { StudentsRootState } from '..';
 import { TestScheduler } from 'rxjs/testing';
 import { studentActions } from '../actions/student.actions';
 

@@ -7,7 +7,7 @@ import { StudentsApiService } from '../../services/students-api.service';
 import { TestScheduler } from 'rxjs/testing';
 import { studentActions } from '../actions/student.actions';
 import { studentListActions } from '../actions/students-list.actions';
-import { StudentsRootState } from '../reducers';
+import { StudentsRootState } from '..';
 import { StudentsListEffects } from './students-list.effects';
 
 describe('Student Effects', () => {

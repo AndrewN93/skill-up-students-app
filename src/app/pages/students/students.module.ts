@@ -11,7 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StudentsListEffects } from './store/effects/students-list.effects';
 import { StudentEffects } from './store/effects/student.effects';
-import * as fromStudents from './store/reducers';
+import * as fromStudents from './store';
 
 @NgModule({
   declarations: [StudentsPageComponent, StudentDataFormModalComponent],

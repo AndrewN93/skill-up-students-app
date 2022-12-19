@@ -1,11 +1,11 @@
 {
   "students": [
     {
-      "name": "Hello",
-      "startDate": "2022-12-18T22:00:00.000Z",
-      "ovarageScore": 123,
-      "isInTop": true,
-      "isActive": true,
+      "name": "Arividerci",
+      "startDate": "2022-11-30T22:00:00.000Z",
+      "ovarageScore": 321,
+      "isInTop": false,
+      "isActive": false,
       "id": 4
     },
     {
@@ -23,6 +23,30 @@
       "isInTop": true,
       "isActive": true,
       "id": 6
+    },
+    {
+      "name": "Test123",
+      "startDate": "2022-12-13T22:00:00.000Z",
+      "ovarageScore": 2,
+      "isInTop": false,
+      "isActive": false,
+      "id": 7
+    },
+    {
+      "name": "Test student - 0123",
+      "startDate": "2022-12-19T22:00:00.000Z",
+      "ovarageScore": 123,
+      "isInTop": true,
+      "isActive": true,
+      "id": 8
+    },
+    {
+      "name": "Andrii",
+      "startDate": "2022-12-18T22:00:00.000Z",
+      "ovarageScore": 123,
+      "isInTop": true,
+      "isActive": true,
+      "id": 9
     }
   ]
 }

@@ -5,7 +5,11 @@ import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { StudentsApiService } from '../../services/students-api.service';
 import { studentActions } from '../../store/actions/student.actions';
-import { selectStudent, selectStudentLoading, selectStudentSaving } from '../../store/reducers';
+import {
+  selectStudent,
+  selectStudentLoading,
+  selectStudentSaving,
+} from '../../store/selectors/student.selectors';
 import { IStudent } from '../student.types';
 
 interface IStudentForm {
@@ -44,17 +48,20 @@ export class StudentDataFormModalComponent implements OnInit, OnDestroy {
     public studentsApiService: StudentsApiService,
     @Inject(MAT_DIALOG_DATA) public data: Pick<IStudent, 'id'>,
     public dialogRef: MatDialogRef<StudentDataFormModalComponent>,
-    private store: Store,
+    private store: Store
   ) {}
 
   ngOnInit() {
     if (this.data.id) {
       this.isEditing = true;
-      this.store.dispatch(studentActions.loadStudent({id: this.data.id}));
+      this.store.dispatch(studentActions.loadStudent({ id: this.data.id }));
     }
-    this.store.select(selectStudent)
+    this.store
+      .select(selectStudent)
       .pipe(takeUntil(this.destroy$))
-      .subscribe({next: student => this.studentDataFrom.patchValue(student)});
+      .subscribe({
+        next: (student) => this.studentDataFrom.patchValue(student),
+      });
   }
 
   ngOnDestroy() {
@@ -64,10 +71,12 @@ export class StudentDataFormModalComponent implements OnInit, OnDestroy {
 
   save() {
     if (this.studentDataFrom.valid) {
-      this.store.dispatch(studentActions.saveStudent({
-        studentData: this.studentDataFrom.getRawValue(),
-        id: this.data?.id,
-      }));
+      this.store.dispatch(
+        studentActions.saveStudent({
+          studentData: this.studentDataFrom.getRawValue(),
+          id: this.data?.id,
+        })
+      );
     }
   }
 
