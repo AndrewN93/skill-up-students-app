@@ -7,7 +7,7 @@ import { studentListActions } from '../actions/students-list.actions';
 
 @Injectable()
 export class StudentsListEffects {
-  loadMovies$ = createEffect(() => {
+  loadStudentsList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(
         studentListActions.loadStudents,
