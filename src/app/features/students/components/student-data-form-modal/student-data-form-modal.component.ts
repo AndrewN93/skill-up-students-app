@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { StudentsApiService } from '../../services/students-api.service';
 import { studentActions } from '../../store/actions/student.actions';
 import { selectStudent, selectStudentLoading, selectStudentSaving } from '../../store/selectors/student.selectors';
 import { Student } from '../student.types';
@@ -41,7 +40,6 @@ export class StudentDataFormModalComponent implements OnInit, OnDestroy {
   });
   constructor(
     public fb: FormBuilder,
-    public studentsApiService: StudentsApiService,
     @Inject(MAT_DIALOG_DATA) public data: Pick<Student, 'id'>,
     public dialogRef: MatDialogRef<StudentDataFormModalComponent>,
     private store: Store,
