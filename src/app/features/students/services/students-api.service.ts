@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DateTimeService } from 'src/app/services/date-time.service';
+import { WidgetConfig } from '../../joined-students-widget/joined-students-widget.types';
 import { Student } from '../components/student.types';
 
 @Injectable({
@@ -8,10 +10,26 @@ import { Student } from '../components/student.types';
 })
 export class StudentsApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private dateTimeService: DateTimeService,
+  ) { }
 
-  public getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>('/api/students');
+
+  public resolveParamsFromConfig(config: WidgetConfig) {
+    const ranges = this.dateTimeService.getRange(config.timeRange);
+    const [from, to] = this.dateTimeService.convertToTimestamps(ranges);
+
+    return {
+      [config.timeKey + '_gte']: from,
+      [config.timeKey + '_lte']: to,
+    }
+  }
+
+  public getStudents(filter?: Record<string, string | number>): Observable<Student[]> {
+    const params = new HttpParams(filter || {});
+
+    return this.http.get<Student[]>('/api/students', { params });
   }
 
   public getSingleStudent(id: string): Observable<Student> {

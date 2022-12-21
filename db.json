@@ -1,20 +1,20 @@
 {
   "students": [
     {
-      "name": "andrii",
-      "startDate": "2022-12-18T22:00:00.000Z",
-      "ovarageScore": 4,
-      "isInTop": false,
+      "name": "Andrii",
+      "startDate": "2022-12-19T22:00:00.000Z",
+      "ovarageScore": 123,
+      "isInTop": true,
       "isActive": false,
-      "id": 1
+      "id": 3
     },
     {
-      "name": "jdfasf",
-      "startDate": "0122-12-31T21:57:56.000Z",
+      "name": "Hello World",
+      "startDate": "2022-12-26T22:00:00.000Z",
       "ovarageScore": 123,
       "isInTop": true,
       "isActive": true,
-      "id": 2
+      "id": 4
     }
   ]
 }

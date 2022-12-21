@@ -7,9 +7,9 @@ import {
   LayoutComponent,
   PageNotFoundComponent
 } from './components';
-import { MaterialModule } from '../shared';
 import { RouterModule } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -25,6 +25,6 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     LayoutComponent,
     NavigationComponent,
   ],
-  imports: [CommonModule, MaterialModule, RouterModule],
+  imports: [CommonModule, SharedModule, RouterModule],
 })
 export class CoreModule {}
