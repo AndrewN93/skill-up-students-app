@@ -31,7 +31,7 @@ export class JoinedStudentsWidgetEffects {
           values.length,
         ]);
       }),
-      map((widgetData) => studentWidgetActions.loadDataSuccess({ widgetData }))
+      map((widgetData) => studentWidgetActions.loadDataSuccess({ widgetData}))
     );
   });
 
