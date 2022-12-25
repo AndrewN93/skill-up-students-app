@@ -1,9 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
 
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .text-center {
-  text-align: center!important;
+  text-align: center !important;
+}
+.highcharts-credits {
+  display: none;
+}
+body.dark {
+  @import 'node_modules/highcharts/css/themes/dark-unica.scss';
+
+  .highcharts-background {
+    fill: transparent!important;
+  }
+
+  text {
+    fill: $neutral-color-80!important;
+  }
 }

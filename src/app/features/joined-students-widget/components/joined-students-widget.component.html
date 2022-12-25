@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Students</h1>
+    </mat-card-title>
+    <mat-card-subtitle>Joined by period of - {{selectedPeriod$ | async}}</mat-card-subtitle>
+    <mat-button-toggle-group [value]="selectedPeriod$ | async" (change)="selectPeriod($event.value)">
+      <mat-button-toggle *ngFor="let period of periods" [value]="period[0]">{{ period[1] }}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="chart-container" #chart></div>
+  </mat-card-content>
+</mat-card>
