@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DateTimeService } from 'src/app/services/date-time.service';
 import { WidgetConfig } from '../../joined-students-widget/joined-students-widget.types';
 import { Student } from '../components/student.types';
@@ -30,6 +30,21 @@ export class StudentsApiService {
     const params = new HttpParams(filter || {});
 
     return this.http.get<Student[]>('/api/students', { params });
+  }
+
+  public getStudentsWidgetData(config: WidgetConfig): Observable<[string, number][]> {
+    return this.getStudents(this.resolveParamsFromConfig(config))
+      .pipe(map((students) => {
+        const studentsByRange = this.dateTimeService.splitDataByRange(
+          students,
+          config.timeRange,
+          'startDate'
+        );
+        return Object.entries(studentsByRange).map(([range, values]) => [
+          range,
+          values.length,
+        ]);
+      }));
   }
 
   public getSingleStudent(id: string): Observable<Student> {

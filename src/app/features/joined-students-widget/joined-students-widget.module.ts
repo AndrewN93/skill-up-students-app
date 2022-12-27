@@ -8,7 +8,10 @@ import { StoreModule } from '@ngrx/store';
 import * as fromStudetnsWidgetReducer from './state';
 import { JoinedStudentsWidgetEffects } from './state/joined-students-widget.effects';
 import { JoinedStudentsWidgetComponent } from './components/joined-students-widget.component';
-
+import { localStorageSync } from 'ngrx-store-localstorage';
+export function localStorageSyncReducer(reducer: any) {
+  return localStorageSync({ keys: ['widgets'], rehydrate: true })(reducer);
+}
 @NgModule({
   declarations: [JoinedStudentsWidgetComponent],
   imports: [
@@ -17,8 +20,16 @@ import { JoinedStudentsWidgetComponent } from './components/joined-students-widg
     MatButtonToggleModule,
     FormsModule,
     EffectsModule.forFeature(JoinedStudentsWidgetEffects),
-    StoreModule.forFeature(fromStudetnsWidgetReducer.featureName, fromStudetnsWidgetReducer.studetnsWidgetReducer),
+    StoreModule.forFeature(
+      fromStudetnsWidgetReducer.featureName,
+      fromStudetnsWidgetReducer.studetnsWidgetReducer,
+      {
+        initialState:
+          fromStudetnsWidgetReducer.joinedStudentsWidgetInitialState,
+        metaReducers: [localStorageSyncReducer],
+      }
+    ),
   ],
-  exports: [JoinedStudentsWidgetComponent]
+  exports: [JoinedStudentsWidgetComponent],
 })
-export class JoinedStudentsWidgetModule { }
+export class JoinedStudentsWidgetModule {}

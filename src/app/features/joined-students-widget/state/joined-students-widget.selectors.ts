@@ -4,23 +4,32 @@ import { featureName } from './joined-students-widget.reducer';
 
 const selectStudentsWidgetFeature =
   createFeatureSelector<JoinedStudentsWidgetState>(featureName);
-
-export const selectWidgetConfig = createSelector(
+  
+export const selectWidgets = createSelector(
   selectStudentsWidgetFeature,
-  (state) => state.config
+  (state) => state.widgets
 );
 
-export const selectWidgetLoading = createSelector(
+export const selectWidgetConfig = (id: string) => createSelector(
   selectStudentsWidgetFeature,
-  (state) => state.isLoading
+  selectWidgets,
+  (_state, widgets) => widgets[id].config
 );
 
-export const selectWidgetData = createSelector(
+export const selectWidgetLoading = (id: string) => createSelector(
   selectStudentsWidgetFeature,
-  (state) => state.data
+  selectWidgets,
+  (_state, widgets) => widgets[id].isLoading
 );
 
-export const selectWidgetTimeRange = createSelector(
+export const selectWidgetData = (id: string) => createSelector(
   selectStudentsWidgetFeature,
-  (state) => state.config.timeRange
+  selectWidgets,
+  (_state, widgets) => widgets[id].data
+);
+
+export const selectWidgetTimeRange = (id: string) => createSelector(
+  selectStudentsWidgetFeature,
+  selectWidgets,
+  (_state, widgets) => widgets[id].config.timeRange
 );

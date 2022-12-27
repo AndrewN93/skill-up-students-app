@@ -1,1 +1,7 @@
-<app-joined-students-widget></app-joined-students-widget>
+<button mat-flat-button (click)="addStudentsWidget()">Add Students Widget</button>
+
+<gridster [options]="options">
+  <gridster-item [item]="item" *ngFor="let item of dashboardItems; trackBy: trackByFn">
+    <ndc-dynamic [ndcDynamicComponent]="item.component" [ndcDynamicInputs]="{id: item.id}"></ndc-dynamic>
+  </gridster-item>
+</gridster>

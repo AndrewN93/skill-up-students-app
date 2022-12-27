@@ -9,7 +9,11 @@ export class WidgetConfig {
 }
 export type StudentsWidgetData = (string | number)[];
 export interface JoinedStudentsWidgetState {
-  config: WidgetConfig;
-  isLoading: boolean;
-  data: StudentsWidgetData[];
+  widgets: {
+    [key: string]: {
+      config: WidgetConfig;
+      isLoading: boolean;
+      data: StudentsWidgetData[];
+    }
+  }
 }
