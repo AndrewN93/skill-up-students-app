@@ -26,4 +26,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     StoreModule.forFeature(fromStudents.featureKey, fromStudents.reducers),
   ],
 })
-export class StudentsModule {}
+export class StudentsModule {
+
+}

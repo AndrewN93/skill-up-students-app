@@ -13,10 +13,14 @@ body {
 .text-center {
   text-align: center !important;
 }
+
 .highcharts-credits {
   display: none;
 }
+
 body.dark {
+  background-color: #444444;
+
   @import 'node_modules/highcharts/css/themes/dark-unica.scss';
 
   .highcharts-background {
@@ -25,5 +29,21 @@ body.dark {
 
   text {
     fill: $neutral-color-80!important;
+  }
+}
+
+.app-dashboard-widget {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  mat-card {
+    height: 100%;
+  }
+
+  mat-card-content {
+    overflow-y: scroll;
   }
 }

@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as Highcharts from 'highcharts';
 import hcNoDataToDisplay from 'highcharts/modules/no-data-to-display';
@@ -6,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 hcNoDataToDisplay(Highcharts);
 
 import { DATE_RANGES_FILTER_DICTIONARY } from 'src/app/constants/date.constants';
+import { BaseWidget } from 'src/app/core/components/base-widget/base-widget.component';
 import { PartialDateTimeUnit } from 'src/app/types/date.types';
 import { StudentsWidgetData } from '../joined-students-widget.types';
 import { studentWidgetActions } from '../state/joined-students-widget.actions';
@@ -20,18 +27,19 @@ import {
   templateUrl: './joined-students-widget.component.html',
   styleUrls: ['./joined-students-widget.component.scss'],
 })
-export class JoinedStudentsWidgetComponent implements OnDestroy {
+export class JoinedStudentsWidgetComponent extends BaseWidget implements OnInit, OnDestroy {
+  checkInitialized(): void {
+    this.store.dispatch(
+      studentWidgetActions.checkInitializedWidget({ id: this._id })
+    );
+  }
   private destroy$ = new Subject<void>();
   private actualChart!: Highcharts.Chart;
-  @ViewChild('chart', { read: ElementRef, static: true }) set chartContainer(
-    el: ElementRef
-  ) {
-    if (!el) return;
-    this.actualChart = Highcharts.chart(el.nativeElement, this.chartOptions);
-    this.initChart();
-  }
-  selectedPeriod$ = this.store.select(selectWidgetTimeRange);
+  @ViewChild('chart', { read: ElementRef, static: true }) chartRef!: ElementRef;
+
+  selectedPeriod$: any;
   periods = Object.entries(DATE_RANGES_FILTER_DICTIONARY);
+
 
   Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {
@@ -70,27 +78,41 @@ export class JoinedStudentsWidgetComponent implements OnDestroy {
     ],
   };
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { super() }
+
+  ngOnInit(): void {
+    if (!this.chartRef) return;
+    this.actualChart = Highcharts.chart(
+      this.chartRef.nativeElement,
+      this.chartOptions
+    );
+    this.initChart();
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
   initChart() {
-    this.store.dispatch(studentWidgetActions.loadData());
+    this.selectedPeriod$ = this.store.select(selectWidgetTimeRange(this._id));
+    this.store.dispatch(studentWidgetActions.loadData({ id: this._id }));
     this.initChartSubscriptions();
   }
+
   initChartSubscriptions() {
+    this.selectedPeriod$ = this.store.select(selectWidgetTimeRange(this._id));
     this.store
-      .select(selectWidgetLoading)
+      .select(selectWidgetLoading(this._id))
       .pipe(takeUntil(this.destroy$))
       .subscribe((payload) => this.toggleOnChartLoading(payload));
 
     this.store
-      .select(selectWidgetData)
+      .select(selectWidgetData(this._id))
       .pipe(takeUntil(this.destroy$))
       .subscribe((payload) => this.updateChartData(payload));
   }
+
   toggleOnChartLoading(loading: boolean) {
     loading && this.actualChart
       ? this.actualChart.showLoading()
@@ -110,7 +132,10 @@ export class JoinedStudentsWidgetComponent implements OnDestroy {
 
   selectPeriod(range: PartialDateTimeUnit) {
     this.store.dispatch(
-      studentWidgetActions.updateConfig({ config: { timeRange: range } })
+      studentWidgetActions.updateConfig({
+        config: { timeRange: range },
+        id: this._id,
+      })
     );
   }
 }

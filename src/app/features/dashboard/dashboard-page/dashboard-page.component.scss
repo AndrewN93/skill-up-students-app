@@ -1,0 +1,18 @@
+$border-color: #424242;
+
+:host ::ng-deep gridster {
+  background-color: transparent;
+
+  gridster-item {
+    background-color: rgb(37, 37, 37);
+  }
+
+  .gridster-row {
+    border-top-color: $border-color;
+    border-bottom-color: $border-color;
+  }
+  .gridster-column {
+    border-right-color: $border-color;
+    border-left-color: $border-color;
+  }
+}
