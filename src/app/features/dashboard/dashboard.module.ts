@@ -6,18 +6,15 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { JoinedStudentsWidgetModule } from '../joined-students-widget/joined-students-widget.module';
 import { EffectsModule } from '@ngrx/effects';
 import { DashbordEffects } from './store/dashbord.effects';
-import {
-  StoreModule,
-} from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import * as fromDashboard from './store/dashbord.reducer';
 import { GridsterModule } from 'angular-gridster2';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { DynamicModule } from 'ng-dynamic-component';
+import { StudentCountryDougnatWidgetModule } from '../student-country-dougnat-widget/student-country-dougnat-widget.module';
 
 export function localStorageSyncReducer(reducer: any) {
-  return localStorageSync({ keys: ['items'], rehydrate: true, })(
-    reducer
-  );
+  return localStorageSync({ keys: ['items'], rehydrate: true })(reducer);
 }
 @NgModule({
   declarations: [DashboardPageComponent],
@@ -28,9 +25,13 @@ export function localStorageSyncReducer(reducer: any) {
     SharedModule,
     JoinedStudentsWidgetModule,
     GridsterModule,
-    StoreModule.forFeature(fromDashboard.featureKey, fromDashboard.reducer, { initialState: fromDashboard.initialState, metaReducers: [localStorageSyncReducer]}),
+    StoreModule.forFeature(fromDashboard.featureKey, fromDashboard.reducer, {
+      initialState: fromDashboard.initialState,
+      metaReducers: [localStorageSyncReducer],
+    }),
     EffectsModule.forFeature([DashbordEffects]),
-    DynamicModule
+    DynamicModule,
+    StudentCountryDougnatWidgetModule,
   ],
 })
 export class DashboardModule {}

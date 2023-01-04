@@ -1,5 +1,5 @@
 <button mat-flat-button (click)="addStudentsWidget()">Add Students Widget</button>
-
+<app-student-country-dougnat-widget></app-student-country-dougnat-widget>
 <gridster [options]="options">
   <gridster-item [item]="item" *ngFor="let item of dashboardItems; trackBy: trackByFn">
     <ndc-dynamic [ndcDynamicComponent]="item.component" [ndcDynamicInputs]="{id: item.id}"></ndc-dynamic>
